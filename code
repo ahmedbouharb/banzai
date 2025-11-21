@@ -88,7 +88,7 @@ import numpy as np
 # PUISQU'ON A SUPPOSE QUE LA MOITIE DU VOLUME DE TRANSACTION REPRESENTE LA DEMANDE, L'AUTRE MOITIE REPRESENTE L'OFFRE
 offre=float(input("Veuillez saisir l'offre: "))
 offre=np.log(offre)
-previous_volume=float(input("Veuillez saisir le volume précédent: "))
+previous_volume=float(input("Veuillez saisir la demande à t-1: "))
 previous_volume=np.log(previous_volume)
 previous_close=float(input("Veuillez saisir le prix précédent: "))
 prime_de_risque=float(input("Veuillez saisir la valeur de la prime de risque en %: "))
