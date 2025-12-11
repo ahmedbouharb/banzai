@@ -5,4 +5,22 @@ Ce dépôt a été conçu comme un **projet portfolio**, adapté aux entretiens 
 - Data Science  
 - Quantitative Analysis  
 - Finance  
-- Machine Learning 
+- Machine Learning
+
+English
+
+
+
+Banzai first builds a Machine Learning model capable of estimating the daily demand for Microsoft stock using technical indicators and market data. Leveraging this model, and combining it with a classical economic framework that computes the equilibrium price by intersecting supply and demand, the project provides a full analytical pipeline.
+
+The final model requires the following user inputs: current supply, demand, the stock price at time t-1, and the risk premium. It then computes the equilibrium price of MSFT, which can be compared to the market price to assess whether the stock is overvalued or undervalued.
+
+This repository is designed as a portfolio project, suitable for interviews in:
+
+Data Science
+
+Quantitative Analysis
+
+Finance
+
+Machine Learning
