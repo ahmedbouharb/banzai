@@ -8,7 +8,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
-
 # IMPORT STOCK DATA FOR MICROSOFT
 msft_ticker = yf.Ticker("MSFT")
 msft_data = msft_ticker.history(period="10y")
@@ -44,10 +43,8 @@ msft_data["Volume"]=msft_data["Volume"]
 msft_data = msft_data.assign(RollingBeta=rolling_beta)
 # CALCULATION OF RISK PREMIUM
 combined_returns["Risk_Premium"] = rolling_beta*(combined_returns['MSFT_Returns'] - combined_returns["RF_Daily"])
-
 # INTRODUCE THE RISK PREMIUM INTO msft_data
 msft_data = msft_data.merge(combined_returns[["Risk_Premium"]], left_index=True, right_index=True, how='left')
-
 msft_df = msft_data[["PreviousClose", "Volume", "RollingBeta","PrevVolume","Risk_Premium","ActualClose"]].copy()
 msft_df = msft_df.dropna()
 msft_df.head()
@@ -55,32 +52,26 @@ msft_df.head()
 # Applying log transformation to smooth extreme variations
 msft_data["Volume"] = np.log(msft_data["Volume"] * 0.5)
 msft_data["PrevVolume"] = np.log(msft_data["PrevVolume"] * 0.5)
-
 # Data preparation
 X = msft_data[["PrevVolume", "Risk_Premium", "PreviousClose", "ActualClose"]]
 y = msft_data["Volume"]
-
 # Remove missing values
 data_clean = pd.concat([X, y], axis=1).dropna()
 X = data_clean[X.columns]
 y = data_clean[y.name]
-
 # Split and normalize
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
-
 # Train the model
 model = LinearRegression()
 model.fit(X_train_scaled, y_train)
 y_pred = model.predict(X_test_scaled)
-
 # Results
 print("--- Coefficients du Modèle ---")
 print(pd.Series(model.coef_, index=X.columns))
 print(f"Intercept: {model.intercept_:.4f}")
-
 print("\n--- Performance du Modèle ---")
 print(f"MSE: {mean_squared_error(y_test, y_pred):.4f}")
 print(f"R²: {r2_score(y_test, y_pred):.4f}")
